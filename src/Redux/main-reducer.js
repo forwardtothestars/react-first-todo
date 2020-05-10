@@ -1,5 +1,6 @@
 import {UsersAPI} from "../API/apiCall";
 import {setUsers} from "./users-reducer";
+import {getTodos} from "./todo-reducer";
 
 const SET_INITIALIZED_STATUS = 'SET_INITIALIZED_STATUS';
 const SET_FETCHING = 'SET_FETCHING';
@@ -34,9 +35,18 @@ export const initializedUsers = () => (dispatch) => {
 }
 
 export const getUsersList = () => (dispatch) => {
-    return UsersAPI.getUsers().then(result => {
-        console.log(result)
-        dispatch(setUsers(result.data));
+    return UsersAPI.getUsers().then(response => {
+        console.log(response)
+        dispatch(setUsers(response.data));
     })
         .catch(err => console.log(err))
+}
+
+export const userCreate = (firstName, lastName, photoURL) => (dispatch) => {
+    return UsersAPI.userCreate(firstName, lastName, photoURL)
+        .then(response => {
+            if (response.data.ResultCode === 0) {
+                dispatch(initializedUsers())
+            }
+        })
 }

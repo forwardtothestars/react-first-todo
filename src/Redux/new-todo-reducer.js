@@ -5,7 +5,7 @@ const SET_IMPORTANCE_TEXT = 'SET_IMPORTANCE_TEXT';
 const initialState = {
     headText: '',
     description: '',
-    importance: ''
+    importance: 'High'
 }
 
 export const newTodoReducer = (state=initialState, action) => {

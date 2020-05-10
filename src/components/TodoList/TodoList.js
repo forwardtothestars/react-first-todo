@@ -3,13 +3,42 @@ import styles from "./TodoList.module.css"
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
-import {getTodos} from "../../Redux/todo-reducer";
+import {getTodos, removeTodo, updateTodo} from "../../Redux/todo-reducer";
 import Preloader from "../Preloader/Preloader";
 import NoData from "./NoData";
 import {setUserId} from "../../Redux/users-reducer";
+import CloseIcon from '@material-ui/icons/Close';
+import CheckIcon from '@material-ui/icons/Check';
 
 const TodoListComponent = (props) => {
-    const {todoList} = props
+    const {todoList, deleteTodo, modifyTodo} = props
+
+    const onRemoveAction = (noteId) => {
+        deleteTodo(noteId);
+    }
+    const onSetComplete = (noteId) => {
+        modifyTodo(noteId, {status: 'complete'})
+    }
+
+    const checkPriority = (importance) => {
+        let element = (style) => {
+            return (
+                <div className={styles.todo_item__priority + ' ' + style}>
+                </div>
+            )
+        }
+
+        switch (importance) {
+            case 'High':
+                return element(styles.color_red)
+            case 'Medium':
+                return element(styles.color_yellow)
+            case 'Low':
+                return element(styles.color_green)
+            default:
+                return null
+        }
+    }
 
     return (
         <div className={styles.todo}>
@@ -18,14 +47,22 @@ const TodoListComponent = (props) => {
                     return (
                         <div className={styles.todo__item} key={item._id}>
 
-                            <div>
+                            {checkPriority(item.importance)}
+                            <div className={styles.item__textInfo}>
                                 <span>
-                                    <input type={'checkbox'}/>
+                                    <h2>{item.title}</h2>
                                 </span>
+                                <div className={styles.item__description}>
+                                    {item.text}
+                                </div>
                             </div>
-                            <div>
-                                <h2>{item.title}</h2>
-                                <div className={styles.item__description}>{item.text}</div>
+                            <div className={styles.item_buttons_row}>
+                                <button onClick={() => onSetComplete(item._id)} className={styles.done_button}>
+                                    <CheckIcon className={styles.delete_icon} color={'action'}/>
+                                </button>
+                                <button onClick={() => onRemoveAction(item._id)} className={styles.delete_button}>
+                                    <CloseIcon className={styles.delete_icon} color={'action'}/>
+                                </button>
                             </div>
                         </div>
                     )
@@ -38,7 +75,11 @@ const TodoListComponent = (props) => {
 }
 
 export const TodoList = (props) => {
-    const {match, isFetching, todoList, getTodos, setUserId} = props
+    const {
+        match, isFetching, todoList,
+        getTodos, setUserId, removeTodo,
+        updateTodo
+    } = props
 
     useEffect(() => {
         if (match.params.userId) {
@@ -47,11 +88,21 @@ export const TodoList = (props) => {
         }
     }, [match.params.userId]);
 
+    const deleteTodo = (noteId) => {
+        removeTodo(noteId, match.params.userId)
+    }
+
+    const modifyTodo = (noteId, params) => {
+        updateTodo(noteId, params,  match.params.userId)
+    }
+
     const checkTodoList = () => {
         if (todoList.length === 0) {
             return <NoData/>
         }
-        return <TodoListComponent todoList={todoList}/>
+        return <TodoListComponent todoList={todoList}
+                                  deleteTodo={deleteTodo}
+                                  modifyTodo={modifyTodo}/>
     }
 
     return (<>
@@ -69,4 +120,8 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default compose(withRouter, connect(mapStateToProps, {getTodos, setUserId}))(TodoList)
+export default compose(
+    withRouter,
+    connect(mapStateToProps, {getTodos, setUserId,
+        removeTodo, updateTodo
+    }))(TodoList)

@@ -12,34 +12,64 @@ db.setUpConnection();
 
 // Using bodyParser middleware
 app.use(bodyParser.urlencoded({extended: true}));
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 
 // Allow requests from any origin
-app.use(cors({ origin: '*' }));
+app.use(cors({origin: '*'}));
 
 // RESTFull api handlers
-app.get('/notes/:id', (req, res) => {
-    console.log(req.params.id)
-    db.listNotes(req.params.id).then(data => res.send(data));
+app.get('/notes/:id?', (req, res) => {
+    const result = {};
+    console.log(req.query)
+    db.listNotes(req.params.id, req.query).then(data => {
+        result.ResultCode = 0;
+        result.todoList = data;
+        return res.send(result)
+    })
+        .catch(err => {
+            result.ResultCode = 1;
+            result.Error = {...err};
+            return res.send(result)
+        })
 });
 
 app.post('/notes/', (req, res) => {
-    const result ={};
+    const result = {};
     db.createNote(req.body)
         .then(data => {
             result.ResultCode = 0;
-            result.id = data._id
+            result.id = data._id;
             return res.send(result)
         })
         .catch(err => {
             result.ResultCode = 1;
-            result.Error = {...err}
+            result.Error = {...err};
             return res.send(result)
         });
 });
 
+app.post('/notes/update', (req, res) => {
+    const result = {};
+    db.updateNote(req.body.id, req.body.params)
+        .then(data => {
+            result.ResultCode = 0;
+            result.id = data._id;
+            return res.send(result)
+        })
+        .catch(err => {
+            result.ResultCode = 1;
+            result.Error = {...err};
+            return res.send(result)
+        });
+});
+
+
 app.delete('/notes/:id', (req, res) => {
-    db.deleteNote(req.params.id).then(data => res.send(data))
+    const result = {};
+    db.deleteNote(req.params.id).then(data => {
+        result.ResultCode = 0;
+        return res.send(result)
+    })
         .catch(err => res.send(err));
 });
 
@@ -51,9 +81,17 @@ app.get('/users', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-    console.log(req.body);
-    db.createUser(req.body).then(data => res.send(data))
-        .catch(err => res.send(err));
+    const result = {};
+    db.createUser(req.body).then(data => {
+        result.ResultCode = 0;
+        result.id = data._id;
+        return res.send(result)
+    })
+        .catch(err => {
+            result.ResultCode = 1;
+            result.Error = {...err};
+            return res.send(result)
+        });
 });
 
 app.delete('/users/:id', (req, res) => {
@@ -61,6 +99,6 @@ app.delete('/users/:id', (req, res) => {
         .catch(err => res.send(err));
 });
 
-const server = app.listen(config.serverPort, function() {
+const server = app.listen(config.serverPort, function () {
     console.log(`Server is up and running on port ${config.serverPort}`);
 });

@@ -10,11 +10,11 @@ function setUpConnection() {
     mongoose.connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.name}`);
 }
 
-function listNotes(userId) {
+function listNotes(userId, params) {
     if (!userId) {
         return Note.find();
     } else {
-        return Note.find({userId})
+        return Note.find({...params, userId})
     }
 }
 
@@ -33,6 +33,10 @@ function createNote(data) {
 
 function deleteNote(id) {
     return Note.findById(id).remove();
+}
+
+function updateNote(id, data) {
+    return Note.findOneAndUpdate({_id: id}, {...data})
 }
 
 /*База пользователей */
@@ -62,6 +66,7 @@ exports.setUpConnection = setUpConnection;
 exports.listNotes = listNotes;
 exports.createNote = createNote;
 exports.deleteNote = deleteNote;
+exports.updateNote = updateNote;
 
 exports.getUsers = getUsers;
 exports.createUser = createUser;

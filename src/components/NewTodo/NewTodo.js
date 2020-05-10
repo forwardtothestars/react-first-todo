@@ -58,7 +58,7 @@ const NewTodoComponent = (props) => {
                     <div>
                         <select value={newTodo.importance} onChange={(e) => onImportanceChange(e)}>
                             <option>High</option>
-                            <option>Middle</option>
+                            <option>Medium</option>
                             <option>Low</option>
                         </select>
                     </div>
