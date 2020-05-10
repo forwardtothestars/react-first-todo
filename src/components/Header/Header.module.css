@@ -1,0 +1,17 @@
+.header {
+    width: 100%;
+    font-size: x-large;
+    line-height: 60px;
+    background-color: azure;
+    color: darkslategray;
+
+}
+
+.header div {
+    box-shadow: 1px 1px 4px rgba(14, 14, 14, 0.3);
+    position: relative;
+}
+
+.header span {
+    margin-left: 30px;
+}

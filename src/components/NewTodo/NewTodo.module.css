@@ -1,0 +1,22 @@
+.newTodo {
+    width: 25%;
+    height: 100vh;
+    box-shadow: 1px 1px 4px rgba(14, 14, 14, 0.3);
+    background-color: rgba(250, 250, 250, 0.5);
+
+}
+
+.mainBlock {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mainBlock div:first-child {
+    width: 100%;
+
+}
+
+.mainBlock div:first-child h3{
+    text-align: center;
+}

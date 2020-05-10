@@ -1,0 +1,14 @@
+body {
+  font-family: FreeMono, monospace;
+  margin: 0;
+  background: url("https://miro.medium.com/max/1024/1*9WeJrBj6pp-qnGjRGg2NUw.png");
+  background-size: cover;
+  color: darkslategray;
+  position: relative;
+
+}
+.main_block {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}

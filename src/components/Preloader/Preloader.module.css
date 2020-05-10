@@ -1,0 +1,15 @@
+.imageBlock {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top:-50px;
+}
+
+
+.loader {
+    width: 100px;
+    height: 70px;
+}
