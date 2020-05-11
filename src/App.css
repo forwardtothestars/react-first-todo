@@ -5,11 +5,11 @@ body {
   background-size: cover;
   color: darkslategray;
   position: relative;
-
+  overflow-x: hidden;
 }
 .main_block {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 100%;
+  position: relative;
 }

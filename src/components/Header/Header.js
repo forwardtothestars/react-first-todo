@@ -6,10 +6,11 @@ const Header = (props) => {
 
     return (
         <header className={styles.header}>
-
-            <AddUser/>
-            <div className={styles.header_blocks}>
-                <span>TODO</span>
+            <div className={styles.fixed_block}>
+                <AddUser/>
+                <div className={styles.header_blocks}>
+                    <span>TODO</span>
+                </div>
             </div>
         </header>
     )

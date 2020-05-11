@@ -3,15 +3,17 @@ import styles from "./TodoList.module.css"
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
-import {getTodos, removeTodo, updateTodo} from "../../Redux/todo-reducer";
+import {getTodos, removeTodo, setViewMode, updateTodo} from "../../Redux/todo-reducer";
 import Preloader from "../Preloader/Preloader";
 import NoData from "./NoData";
 import {setUserId} from "../../Redux/users-reducer";
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
+import ButtonGroupMenu from "../Buttons/ButtonGroup";
+import {setAddNewTodoMenuVisible} from "../../Redux/new-todo-reducer";
 
 const TodoListComponent = (props) => {
-    const {todoList, deleteTodo, modifyTodo} = props
+    const {todoList, deleteTodo, modifyTodo, buttons, viewMode} = props
 
     const onRemoveAction = (noteId) => {
         deleteTodo(noteId);
@@ -42,6 +44,8 @@ const TodoListComponent = (props) => {
 
     return (
         <div className={styles.todo}>
+            <ButtonGroupMenu items={buttons}
+                             viewMode={viewMode}/>
             <div className={styles.todo_items}>
                 {todoList.map(item => {
                     return (
@@ -78,31 +82,64 @@ export const TodoList = (props) => {
     const {
         match, isFetching, todoList,
         getTodos, setUserId, removeTodo,
-        updateTodo
+        updateTodo, setViewMode, viewMode,
+        setAddNewTodoMenuVisible
     } = props
+    const currentUserId = match.params.userId
+
+    const buttons = [
+        {
+            id: 2,
+            label: 'Completed',
+            mode: 'complete',
+            callback: () => {
+                setViewMode('complete')
+                getTodos(currentUserId, 'complete')
+            }
+        },
+        {
+            id: 1,
+            label: 'Active',
+            mode: 'active',
+            callback: () => {
+                setViewMode('active')
+                getTodos(currentUserId, 'active')
+            }
+        },
+        {
+            id: 3,
+            label: 'Add new todo',
+            callback: () => {
+                setAddNewTodoMenuVisible(true)
+            }
+        },
+    ]
 
     useEffect(() => {
-        if (match.params.userId) {
-            setUserId(match.params.userId)
-            getTodos(match.params.userId)
+        if (currentUserId) {
+            setUserId(currentUserId)
+            getTodos(currentUserId, viewMode)
         }
-    }, [match.params.userId]);
+    }, [currentUserId]);
 
     const deleteTodo = (noteId) => {
-        removeTodo(noteId, match.params.userId)
+        removeTodo(noteId, currentUserId, viewMode)
     }
 
     const modifyTodo = (noteId, params) => {
-        updateTodo(noteId, params,  match.params.userId)
+        updateTodo(noteId, params, currentUserId, viewMode)
     }
 
     const checkTodoList = () => {
         if (todoList.length === 0) {
-            return <NoData/>
+            return <NoData viewMode={viewMode}
+                           buttons={buttons}/>
         }
         return <TodoListComponent todoList={todoList}
                                   deleteTodo={deleteTodo}
-                                  modifyTodo={modifyTodo}/>
+                                  modifyTodo={modifyTodo}
+                                  buttons={buttons}
+                                  viewMode={viewMode}/>
     }
 
     return (<>
@@ -116,12 +153,15 @@ export const TodoList = (props) => {
 let mapStateToProps = (state) => {
     return {
         isFetching: state.main.isFetching,
-        todoList: state.todoData.todoList
+        todoList: state.todoData.todoList,
+        viewMode: state.todoData.viewMode
     }
 }
 
 export default compose(
     withRouter,
-    connect(mapStateToProps, {getTodos, setUserId,
-        removeTodo, updateTodo
+    connect(mapStateToProps, {
+        getTodos, setUserId,
+        removeTodo, updateTodo, setViewMode,
+        setAddNewTodoMenuVisible
     }))(TodoList)

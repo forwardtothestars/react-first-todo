@@ -1,11 +1,13 @@
 const SET_HEAD_TEXT = 'SET_HEAD_TEXT';
 const SET_DESCRIPTION_TEXT = 'SET_DESCRIPTION_TEXT';
 const SET_IMPORTANCE_TEXT = 'SET_IMPORTANCE_TEXT';
+const SET_MENU_VISIBLE = 'SET_MENU_VISIBLE';
 
 const initialState = {
     headText: '',
     description: '',
-    importance: 'High'
+    importance: 'High',
+    menuVisible: false
 }
 
 export const newTodoReducer = (state=initialState, action) => {
@@ -19,6 +21,8 @@ export const newTodoReducer = (state=initialState, action) => {
         case SET_IMPORTANCE_TEXT:
             return {...state, importance: action.importance}
 
+        case SET_MENU_VISIBLE:
+            return {...state, menuVisible: action.flag}
         default: return state
     }
 }
@@ -31,4 +35,7 @@ export const setDescription = (description) => {
 }
 export const setImportance = (importance) => {
     return {type: SET_IMPORTANCE_TEXT, importance}
+}
+export const setAddNewTodoMenuVisible = (flag) => {
+    return {type: SET_MENU_VISIBLE, flag}
 }

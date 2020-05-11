@@ -1,0 +1,10 @@
+.buttonGroup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonGroup_items {
+    margin-bottom: -1.0em;
+    margin-top: 0.7em;
+}
