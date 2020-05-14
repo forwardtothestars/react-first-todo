@@ -14,7 +14,7 @@
     height: 60px;
     background-color: azure;
     color: darkslategray;
-    z-index: 100;
+    z-index: 99;
 }
 
 .header_blocks {

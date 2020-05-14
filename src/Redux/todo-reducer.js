@@ -7,7 +7,12 @@ const SET_TODO_VIEW_MODE = 'SET_TODO_VIEW_MODE';
 
 let initialState = {
     todoList: [],
-    viewMode: 'active'
+    viewMode: 'active',
+    editTodoData: {
+        title: '',
+        text: '',
+        importance: ''
+    }
 }
 
 export const todoReducer = (state = initialState, action) => {
@@ -16,6 +21,7 @@ export const todoReducer = (state = initialState, action) => {
             return {...state, todoList: action.todoList}
         case SET_TODO_VIEW_MODE:
             return {...state, viewMode: action.viewMode}
+
         default:
             return state
     }
@@ -27,6 +33,8 @@ export const setTodoList = (todoList) => {
 export const setViewMode = (viewMode) => {
     return {type: SET_TODO_VIEW_MODE, viewMode}
 }
+
+/////////////////////////////////////////////////////////
 
 export const getTodos = (userId, status) => (dispatch) => {
     dispatch(setFetching(true))

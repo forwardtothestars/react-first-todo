@@ -1,0 +1,32 @@
+.headText {
+    width: 300px;
+    height: 30px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: solid #b5b5b5 2px;
+    padding-left: 10px;
+}
+
+.description {
+    width: 300px;
+    height: 60px;
+    margin-bottom: 15px;
+    resize: none;
+    border: solid #b5b5b5 2px;
+    padding-left: 10px;
+}
+
+.importance {
+    width: 300px;
+    height: 30px;
+    margin-bottom: 15px;
+    border: solid #b5b5b5 2px;
+    padding-left: 10px;
+}
+
+.input_data{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

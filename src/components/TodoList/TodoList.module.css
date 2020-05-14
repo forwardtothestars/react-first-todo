@@ -88,8 +88,8 @@
 .delete_button {
     margin: 2px;
     background-color: rgba(245, 7, 7, 0.5);
-    border: solid black 0.1em;
-    border-radius: 5px;
+    border: solid black 1px;
+    border-radius: 3px;
 }
 
 .delete_button svg {
@@ -97,10 +97,7 @@
 }
 
 .delete_button:hover {
-    margin: 2px;
     background-color: rgba(255, 0, 116, 0.5);
-    border: solid black 0.1em;
-    border-radius: 5px;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -108,8 +105,8 @@
 .done_button {
     margin: 2px;
     background-color: rgba(7, 245, 106, 0.5);
-    border: solid black 0.1em;
-    border-radius: 5px;
+    border: solid black 1px;
+    border-radius: 3px;
 }
 
 .done_button svg {
@@ -117,14 +114,28 @@
 }
 
 .done_button:hover {
-    margin: 2px;
-    background-color: rgba(69, 247, 143, 0.5);
-    border: solid black 0.1em;
-    border-radius: 5px;
+    background-color: rgba(0, 120, 42, 0.5);
     cursor: pointer;
     transition: 0.2s;
 }
 
-.delete_icon {
+.edit_button {
+    margin: 2px;
+    background-color: rgba(110, 112, 112, 0.5);
+    border: solid black 1px;
+    border-radius: 3px;
+}
+
+.edit_button:hover {
+    background-color: rgba(156, 161, 160, 0.5);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.edit_button svg {
+    color: white;
+}
+
+.icon {
     margin: -0.3em;
 }

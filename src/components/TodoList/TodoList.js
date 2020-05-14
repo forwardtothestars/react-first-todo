@@ -9,17 +9,26 @@ import NoData from "./NoData";
 import {setUserId} from "../../Redux/users-reducer";
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
+import EditIcon from '@material-ui/icons/Edit';
 import ButtonGroupMenu from "../Buttons/ButtonGroup";
 import {setAddNewTodoMenuVisible} from "../../Redux/new-todo-reducer";
+import {updateModalStatus} from "../../Redux/main-reducer";
+import EditTodo from "../EditTodo/EditTodo";
 
 const TodoListComponent = (props) => {
-    const {todoList, deleteTodo, modifyTodo, buttons, viewMode} = props
+    const {
+        todoList, deleteTodo, modifyTodo, buttons,
+        viewMode, editTodo
+    } = props
 
     const onRemoveAction = (noteId) => {
         deleteTodo(noteId);
     }
     const onSetComplete = (noteId) => {
         modifyTodo(noteId, {status: 'complete'})
+    }
+    const onEditAction = (note) => {
+        editTodo(note)
     }
 
     const checkPriority = (importance) => {
@@ -61,11 +70,14 @@ const TodoListComponent = (props) => {
                                 </div>
                             </div>
                             <div className={styles.item_buttons_row}>
+                                <button onClick={() => onEditAction(item)} className={styles.edit_button}>
+                                    <EditIcon className={styles.icon} color={'action'} fontSize="small"/>
+                                </button>
                                 <button onClick={() => onSetComplete(item._id)} className={styles.done_button}>
-                                    <CheckIcon className={styles.delete_icon} color={'action'}/>
+                                    <CheckIcon className={styles.icon} color={'action'} fontSize="small"/>
                                 </button>
                                 <button onClick={() => onRemoveAction(item._id)} className={styles.delete_button}>
-                                    <CloseIcon className={styles.delete_icon} color={'action'}/>
+                                    <CloseIcon className={styles.icon} color={'action'} fontSize="small"/>
                                 </button>
                             </div>
                         </div>
@@ -83,7 +95,7 @@ export const TodoList = (props) => {
         match, isFetching, todoList,
         getTodos, setUserId, removeTodo,
         updateTodo, setViewMode, viewMode,
-        setAddNewTodoMenuVisible
+        setAddNewTodoMenuVisible, updateModalStatus
     } = props
     const currentUserId = match.params.userId
 
@@ -130,6 +142,36 @@ export const TodoList = (props) => {
         updateTodo(noteId, params, currentUserId, viewMode)
     }
 
+    const saveChanges = (modalData) => {
+        
+        let data = {
+            title: modalData.title,
+            text: modalData.text,
+            importance: modalData.importance
+        }
+        let params = {
+            status: false,
+            ModalContentComponent: null,
+            modalData: null,
+            saveCallback: null
+        };
+        let {_id, userId, viewMode} = modalData
+        updateTodo(_id, data, userId, viewMode)
+        updateModalStatus(params)
+
+    }
+
+    const editTodo = (todoData) => {
+        let params = {
+            status: true,
+            ModalContentComponent: EditTodo,
+            saveCallback: saveChanges,
+            name: 'Edit note',
+            modalData: {...todoData, userId: currentUserId, viewMode},
+        };
+        updateModalStatus(params)
+    }
+
     const checkTodoList = () => {
         if (todoList.length === 0) {
             return <NoData viewMode={viewMode}
@@ -138,6 +180,7 @@ export const TodoList = (props) => {
         return <TodoListComponent todoList={todoList}
                                   deleteTodo={deleteTodo}
                                   modifyTodo={modifyTodo}
+                                  editTodo={editTodo}
                                   buttons={buttons}
                                   viewMode={viewMode}/>
     }
@@ -154,7 +197,8 @@ let mapStateToProps = (state) => {
     return {
         isFetching: state.main.isFetching,
         todoList: state.todoData.todoList,
-        viewMode: state.todoData.viewMode
+        viewMode: state.todoData.viewMode,
+        editTodoData: state.todoData.editTodoData
     }
 }
 
@@ -163,5 +207,5 @@ export default compose(
     connect(mapStateToProps, {
         getTodos, setUserId,
         removeTodo, updateTodo, setViewMode,
-        setAddNewTodoMenuVisible
+        setAddNewTodoMenuVisible, updateModalStatus
     }))(TodoList)

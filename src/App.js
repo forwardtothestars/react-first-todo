@@ -11,6 +11,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {initializedUsers} from "./Redux/main-reducer";
 import Preloader from "./components/Preloader/Preloader";
+import {withModal} from "./components/HOC/withModal";
 
 function App(props) {
     const {main, initializedUsers} = props;
@@ -47,6 +48,7 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
+    withModal,
     withRouter,
     connect(mapStateToProps, {initializedUsers})
 )(App);
