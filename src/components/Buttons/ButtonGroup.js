@@ -9,7 +9,8 @@ const ButtonGroupMenu = (props) => {
                 {
                     items.sort((a, b) => a.id - b.id).map((item) => {
                         return (
-                            <button onClick={item.callback}
+                            <button className={viewMode === item.mode ? styles.addButtonInactive : styles.addButton}
+                                    onClick={viewMode === item.mode ? ()=>{} : item.callback}
                                     disabled={viewMode === item.mode}
                                     key={item.id}>
                                 {item.label}

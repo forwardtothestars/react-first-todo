@@ -143,7 +143,7 @@ export const TodoList = (props) => {
     }
 
     const saveChanges = (modalData) => {
-        
+
         let data = {
             title: modalData.title,
             text: modalData.text,

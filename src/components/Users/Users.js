@@ -2,12 +2,14 @@ import React from "react";
 import styles from './Users.module.css'
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
+import NewUser from "./NewUser";
 
 const Users = (props) => {
 
     const {users} = props
     return (
         <div className={styles.users}>
+            <NewUser/>
             <div className={styles.users__items}>
                 {users.map(item => {
                     return (

@@ -1,8 +1,9 @@
 .users {
     width: 15%;
-    display: flex;
+    /*display: flex;
     align-items: flex-start;
-    position: relative;
+    flex-wrap: wrap;
+    position: relative;*/
 
 }
 
@@ -42,4 +43,101 @@
 .users__item {
     text-decoration: none;
 
+}
+
+/* Разворачивающийся блок */
+
+.addNewUserBlock {
+
+}
+
+.addUser_action {
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    padding: 10px 0;
+    background-color: #A9A9A9;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.addUser_action:hover {
+    transition: 0.2s;
+    background-color: #FFF0F5;
+    cursor: pointer;
+    color: #000000;
+}
+
+.addUser_action_active {
+    color: #000000;
+    background-color: #FFF0F5;
+    border-bottom: 2px solid rgba(36, 36, 35, 1);
+}
+
+.addUserSpn {
+    height: 40px;
+    width: 100%;
+}
+
+.hiddenBlock {
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    transition: 0.6s;
+    transform-origin: top center;
+    transform: scaleY(0);
+    background-color: rgba(155, 168, 168, 0.1);
+
+}
+
+.hiddenBlock_active {
+    visibility: visible;
+    opacity: 1;
+    transform: scaleY(1);
+    border-bottom: 2px solid rgba(36, 36, 35, 1);
+}
+
+.firstNameInput {
+    margin-top: 10px;
+}
+
+input {
+    border: 0;
+    margin-bottom: 10px;
+    height: 20px;
+    padding-left: 10px;
+    border-radius: 3px;
+}
+
+input:focus {
+    outline: 0;
+    outline-offset: 0;
+    border: 2px solid rgba(36, 36, 35, .5);
+}
+
+.addButton {
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    width: 100px;
+    height: 25px;
+    margin-bottom: 10px;
+}
+
+.addButton:hover {
+    transition: 0.5s;
+    color: #fff;
+    background-color: rgba(94, 94, 94, 1);
+    border: 2px solid rgba(13, 13, 13, 0.3);
+    cursor: pointer;
+}
+
+.addButton:focus {
+    transition: 0.3s;
+    color: #fff;
+    background-color: rgba(105, 105, 105, 0.3);
+    border: 2px solid rgba(13, 13, 13, 0.3);
 }
