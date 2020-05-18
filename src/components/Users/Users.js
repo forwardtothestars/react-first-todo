@@ -6,9 +6,9 @@ import NewUser from "./NewUser";
 
 const Users = (props) => {
 
-    const {users} = props
+    const {users, isRightMenuOpen} = props
     return (
-        <div className={styles.users}>
+        <div className={isRightMenuOpen ? [styles.users, styles.users_active].join(' ') : styles.users}>
             <NewUser/>
             <div className={styles.users__items}>
                 {users.map(item => {
@@ -27,7 +27,8 @@ const Users = (props) => {
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersData.users
+        users: state.usersData.users,
+        isRightMenuOpen: state.main.isRightMenuOpen
     }
 }
 

@@ -7,8 +7,10 @@ const PREPARE_MODAL_DATA = 'PREPARE_MODAL_DATA';
 const SET_EDIT_TODO_TITLE = 'SET_EDIT_TODO_TITLE';
 const SET_EDIT_TODO_TEXT = 'SET_EDIT_TODO_TEXT';
 const SET_EDIT_TODO_IMPORTANCE = 'SET_EDIT_TODO_IMPORTANCE';
+const SET_RIGHT_MENU_VISIBLE = 'SET_RIGHT_MENU_VISIBLE';
 
 let initialState = {
+    isRightMenuOpen: false,
     isInitialized: true,
     isFetching: false,
     isModalOpen: false,
@@ -23,6 +25,9 @@ let initialState = {
 
 export const mainReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_RIGHT_MENU_VISIBLE: {
+            return {...state, isRightMenuOpen: action.flag};
+        }
         case SET_INITIALIZED_STATUS: {
             return {...state, isInitialized: action.flag};
         }
@@ -40,17 +45,17 @@ export const mainReducer = (state = initialState, action) => {
             copyState.modalData.modalProps = action.modalData;
             return copyState;
         case SET_EDIT_TODO_TITLE:
-            return copeAndEditState(state, 'title', action.title)
+            return copyAndEditState(state, 'title', action.title)
         case SET_EDIT_TODO_TEXT:
-            return copeAndEditState(state, 'text', action.text)
+            return copyAndEditState(state, 'text', action.text)
         case SET_EDIT_TODO_IMPORTANCE:
-            return copeAndEditState(state, 'importance', action.importance)
+            return copyAndEditState(state, 'importance', action.importance)
         default:
             return state;
     }
 }
 
-const copeAndEditState = (state, paramName, paramValue) => {
+const copyAndEditState = (state, paramName, paramValue) => {
     let copyState = {
         ...state,
         modalData: {...state.modalData, modalProps: {...state.modalData.modalProps}}
@@ -64,6 +69,9 @@ export const setInitialized = (flag) => {
 }
 export const setFetching = (flag) => {
     return ({type: SET_FETCHING, flag})
+}
+export const setMenuState = (flag) => {
+    return ({type: SET_RIGHT_MENU_VISIBLE, flag})
 }
 export const updateModalStatus = (params) => {
     return ({

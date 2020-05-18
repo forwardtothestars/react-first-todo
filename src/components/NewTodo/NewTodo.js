@@ -39,43 +39,45 @@ const NewTodoComponent = (props) => {
 
     }
     return (
-        <form className={styles.form} onSubmit={prepareData}>
-            <div className={newTodo.menuVisible ? styles.newTodo + ' ' + styles.newTodo_active : styles.newTodo}>
-                <div className={styles.mainBlock}>
-                    <div>
-                        <h3>Добавление новой записи</h3>
-                    </div>
-                    <div className={styles.input_data}>
+        <div>
+            <form className={styles.form} onSubmit={prepareData}>
+                <div className={newTodo.menuVisible ? styles.newTodo + ' ' + styles.newTodo_active : styles.newTodo}>
+                    <div className={styles.mainBlock}>
                         <div>
-                            <input className={styles.headText}
-                                   type={'text'}
-                                   value={newTodo.headText}
-                                   placeholder={'Header'}
-                                   onChange={(e) => onHeadChange(e)}
-                            />
+                            <h3>Добавление новой записи</h3>
                         </div>
-                        <div>
-                        <textarea className={styles.description}
-                                  placeholder={'Description'}
-                                  value={newTodo.description}
-                                  onChange={(e) => onDescriptionChange(e)}
-                        />
-                        </div>
-                        <div>
-                            <select className={styles.importance} value={newTodo.importance}
-                                    onChange={(e) => onImportanceChange(e)}>
-                                <option>High</option>
-                                <option>Medium</option>
-                                <option>Low</option>
-                            </select>
-                        </div>
-                        <div className={styles.add__button_block}>
-                            <button className={styles.button}>Add</button>
+                        <div className={styles.input_data}>
+                            <div>
+                                <input className={styles.headText}
+                                       type={'text'}
+                                       value={newTodo.headText}
+                                       placeholder={'Header'}
+                                       onChange={(e) => onHeadChange(e)}
+                                />
+                            </div>
+                            <div>
+                                <textarea className={styles.description}
+                                          placeholder={'Description'}
+                                          value={newTodo.description}
+                                          onChange={(e) => onDescriptionChange(e)}
+                                />
+                            </div>
+                            <div>
+                                <select className={styles.importance} value={newTodo.importance}
+                                        onChange={(e) => onImportanceChange(e)}>
+                                    <option>High</option>
+                                    <option>Medium</option>
+                                    <option>Low</option>
+                                </select>
+                            </div>
+                            <div className={styles.add__button_block}>
+                                <button className={styles.button}>Add</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     )
 }
 

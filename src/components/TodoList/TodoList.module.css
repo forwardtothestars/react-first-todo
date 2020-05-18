@@ -21,6 +21,7 @@
     position: relative;
 }
 
+
 .item__textInfo {
     margin-left: 0.7em;
 }
@@ -138,4 +139,21 @@
 
 .icon {
     margin: -0.3em;
+}
+
+/* media   ------------------*/
+
+@media (max-width: 1075px) {
+    .todo {
+        width: 100%
+    }
+}
+
+@media (max-width: 399px) {
+    .todo {
+        width: 100%
+    }
+    .todo__item {
+        background-color: rgba(250, 250, 250, 0.9);
+    }
 }

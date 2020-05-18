@@ -18,28 +18,34 @@
     border-bottom: 2px solid rgba(36, 36, 35, 1);
 }
 
+.menuButton {
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin: 2px 0 2px 0.2em;
+    border-radius: 0.3rem;
+    background-color: rgba(66, 64, 64, 1);
+}
+
+.menuButton:hover {
+    transition: 0.5s;
+    background-color: rgba(128, 126, 126, 1);
+}
+
+@media (max-width: 1075px) {
+    .menuButton {
+        display: flex;
+    }
+}
+
 .header_blocks {
-    float: right;
-    display: inline-flex;
-
-}
-
-.header span {
-    margin-right: 0.7em;
-}
-
-.input_user {
-    margin-left: 0.7em;
-    float: left;
     display: flex;
 }
 
-.input_user input {
-    height: 30px;
-    padding-left: 10px;
-    margin-bottom: 15px;
-    border-radius: 5%;
-    outline: 0;
-    margin-left: 5px;
-    border: solid black 2px;
+.header span {
+    margin-left: auto;
+    margin-right: 0.7em;
 }
